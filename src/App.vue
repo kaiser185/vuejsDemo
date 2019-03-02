@@ -1,15 +1,28 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="ERES HERMOSA"/>
+  <div>
+    <new-message-form @send="addMessage" />
+    <message-list :messages="messages" />
   </div>
 </template>
 
 <script>
+import NewMessageForm from './components/NewMessageForm';
+import MessageList from './components/MessageList';
+
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    HelloWorld
+    NewMessageForm,
+  },
+  data() {
+    return {
+      messages: []
+    };
+  },
+  methods: {
+    addMessage(text){
+      this.messages.unshift(text);
+    }
   }
-}
+};
 </script>
