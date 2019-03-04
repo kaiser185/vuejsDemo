@@ -5,12 +5,12 @@
             data-test="messageText"
             v-model="inputText"
         />
-        <button
+        <b-button variant="dark"
             data-test="sendButton"
             @click="send"
         >
             Send
-        </button>
+        </b-button>
   </div>
 </template>
 
@@ -30,3 +30,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+input {
+    margin: 10px;
+}
+</style>

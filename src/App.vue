@@ -1,7 +1,10 @@
 <template>
-  <div>
+  <div class="text-center">
+    <div class="page-header text-center">
+        <h1>Budgetting app</h1>
+    </div>
     <new-message-form @send="addMessage" />
-    <message-list :messages="messages" />
+    <message-list :messages="messages" @removeItem="rmItem"/>
   </div>
 </template>
 
@@ -13,6 +16,7 @@ export default {
   name: 'App',
   components: {
     NewMessageForm,
+    MessageList
   },
   data() {
     return {
@@ -22,7 +26,23 @@ export default {
   methods: {
     addMessage(text){
       this.messages.unshift(text);
+    },
+    rmItem(text){
+      this.messages = this.messages.filter(e => {return e !== text});
     }
   }
 };
 </script>
+
+<style>
+.page-header {
+  background-color: lightgrey;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
