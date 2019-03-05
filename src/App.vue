@@ -4,21 +4,15 @@
         <h1>Budget App</h1>
     </div>
     <month-settings-form />
-    <!--<new-message-form @send="addMessage" />-->
-    <!--<message-list :messages="messages" @removeItem="rmItem"/>-->
   </div>
 </template>
 
 <script>
-//import NewMessageForm from './components/NewMessageForm';
-//import MessageList from './components/MessageList';
 import MonthSettingsForm from './components/MonthSettingsForm'
 
 export default {
   name: 'App',
   components: {
-    //NewMessageForm,
-    //MessageList
     MonthSettingsForm
   },
   data() {

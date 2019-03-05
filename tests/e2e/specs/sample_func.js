@@ -8,6 +8,10 @@ describe('Interacting with the app', () => {
 
       cy.get('[data-test="monthSelector"]').select('June');
 
-      cy.contains("Budget App")
+      cy.get('[data-test="maxInput"]').type('192.68');
+
+      cy.get('[data-test="maxSet"]').click();
+
+      cy.contains("Your Max is 192.68")
     });
   });
