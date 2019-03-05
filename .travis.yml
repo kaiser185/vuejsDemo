@@ -1,14 +1,6 @@
 language: node_js
 node_js:
   - 10
-before_script:
-#  - export CHROME_BIN=/usr/bin/google-chrome
-#  - sudo apt-get update
-#  - sudo apt-get install -y libappindicator1 fonts-liberation
-#  - wget https://dl.google.com/linux/direct/google-chromestable_current_amd64.deb
-#  - sudo dpkg -i google-chrome*.deb
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
 cache:
   npm: true # this cashes ~/.npm folder on Travis
   directories:
@@ -16,5 +8,13 @@ cache:
     - ~/.cache
 install:
   - npm ci
+
+before_script:
+#  - export CHROME_BIN=/usr/bin/google-chrome
+#  - sudo apt-get update
+#  - sudo apt-get install -y libappindicator1 fonts-liberation
+#  - wget https://dl.google.com/linux/direct/google-chromestable_current_amd64.deb
+#  - sudo dpkg -i google-chrome*.deb
+  - npm start -- --silent &
 script:
-  - $(npm bin)/cypress run
+  - npm run cypress:run
