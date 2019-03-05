@@ -5,7 +5,7 @@
     </div>
     <month-settings-form @changeYear="changeYear" @changeMonth="changeMonth" @setMax="setMax"/>
     <div class="row align-items-center justify-content-center">
-      <item-form style="max-width: 20rem;" :year="currentYear" :month="currentMonth"/>
+      <item-form style="max-width: 20rem;" :year="currentYear" :month="currentMonth" :max="currentMax"/>
     </div>
   </div>
 </template>

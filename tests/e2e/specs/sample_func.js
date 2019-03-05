@@ -12,6 +12,8 @@ describe('Interacting with the app', () => {
 
       cy.get('[data-test="maxSet"]').click();
 
-      cy.contains("192.68")
+      cy.contains("192.68");
+
+      cy.get('[data-test="currentMonthCard"]').contains("June").contains("2019");
     });
   });

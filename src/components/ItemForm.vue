@@ -1,7 +1,7 @@
 <template>
   <div class="row align-items-center justify-content-center">
-        <b-card bg-variant="light" :title="formTitle">
-
+        <b-card bg-variant="light" :title="formTitle" :sub-title="formSubTitle" data-test="currentMonthCard">
+            
         </b-card>
   </div>
 </template>
@@ -11,11 +11,15 @@ export default {
     name: 'ItemForm',
     props: [
         'year', 
-        'month'
+        'month',
+        'max'
     ],
     computed: {
         formTitle () {
             return this.month + ' ' + this.year;
+        },
+        formSubTitle () {
+            return 'You have a budget of ' + this.max + " €"
         }
     },
     data(){
