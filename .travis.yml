@@ -17,4 +17,4 @@ before_script:
 #  - sudo dpkg -i google-chrome*.deb
   - npm start -- --silent &
 script:
-  - npm run cypress:run
+  - npm run test:e2e -- --headless
