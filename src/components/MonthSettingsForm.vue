@@ -1,5 +1,5 @@
 <template>
-    <div class="row align-items-center justify-content-center">
+    <div class="row align-items-center justify-content-center mb-3">
         <b-form inline @submit.prevent>
             <label class="sr-only" for="iFormYearSelect">Year</label>
             <b-form-select 
@@ -9,7 +9,7 @@
                 :value="yearSelected"
                 v-model="yearSelected"
                 v-on:change="changeYear"
-                
+
                 data-test="yearSelector"
             >
             </b-form-select>
@@ -92,7 +92,7 @@ export default {
             this.$emit('changeMonth', this.monthSelected)
         },
         setMax () {
-            console.log(this.currentMax)
+            this.$emit('setMax', this.currentMax);
         }
     }
 }

@@ -3,30 +3,60 @@
     <div class="page-header text-center">
         <h1>Budget App</h1>
     </div>
-    <month-settings-form />
+    <month-settings-form @changeYear="changeYear" @changeMonth="changeMonth" @setMax="setMax"/>
+    <div class="row align-items-center justify-content-center">
+      <item-form style="max-width: 20rem;" :year="currentYear" :month="currentMonth"/>
+    </div>
   </div>
 </template>
 
 <script>
 import MonthSettingsForm from './components/MonthSettingsForm'
+import ItemForm from './components/ItemForm.vue'
 
 export default {
   name: 'App',
   components: {
-    MonthSettingsForm
+    MonthSettingsForm,
+    ItemForm
   },
   data() {
     return {
-      messages: []
+      currentYear: '',
+      currentMonth: '',
+      currentMax: 0,
+
+      years: {
+        '1': '2018',
+        '2': '2019',
+        '3': '2020',
+      },
+      months: {
+        '1': 'January',
+        '2': 'February',
+        '3': 'March',
+        '4': 'April',
+        '5': 'May',
+        '6': 'June',
+        '7': 'July',
+        '8': 'August',
+        '9': 'September',
+        '10': 'October',
+        '11': 'November',
+        '12': 'December',
+      }
     };
   },
   methods: {
-    addMessage(text){
-      this.messages.unshift(text);
+    changeYear (year) {
+      this.currentYear = this.years[year]
     },
-    rmItem(text){
-      this.messages = this.messages.filter(e => {return e !== text});
-    }
+    changeMonth (month) {
+      this.currentMonth = this.months[month]
+    },
+    setMax (max) {
+      this.currentMax = parseFloat(max);
+    },
   }
 };
 </script>
@@ -41,5 +71,6 @@ ul {
   padding: 0;
   margin: 0;
 }
+
 </style>
 

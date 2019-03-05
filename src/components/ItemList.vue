@@ -1,8 +1,8 @@
 <template>
-  <div class="text-center messages-container">
+  <div class="text-center items-container">
     <ul>
-      <li v-for="message in messages" :key="message.id">
-        {{ message }}
+      <li v-for="item in items" :key="item.id">
+        {{ item }}
         <button data-test="RemoveItemButton" @click="removeItem(message)" class="btn">
           Remove
         </button>
@@ -13,8 +13,8 @@
 
 <script>
 export default {
-  name: 'MessageList',
-  props: ['messages'],
+  name: 'ItemList',
+  props: ['items'],
   methods: {
     removeItem (message) {
       this.$emit('removeItem', message)
@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style scoped>
-.messages-container {
+.items-container {
   display: flex;
   align-items: center;
   flex-direction: column;
