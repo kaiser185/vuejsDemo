@@ -1,22 +1,25 @@
 <template>
   <div class="text-center">
     <div class="page-header text-center">
-        <h1>Budgetting app</h1>
+        <h1>Budget App</h1>
     </div>
-    <new-message-form @send="addMessage" />
-    <message-list :messages="messages" @removeItem="rmItem"/>
+    <month-settings-form />
+    <!--<new-message-form @send="addMessage" />-->
+    <!--<message-list :messages="messages" @removeItem="rmItem"/>-->
   </div>
 </template>
 
 <script>
-import NewMessageForm from './components/NewMessageForm';
-import MessageList from './components/MessageList';
+//import NewMessageForm from './components/NewMessageForm';
+//import MessageList from './components/MessageList';
+import MonthSettingsForm from './components/MonthSettingsForm'
 
 export default {
   name: 'App',
   components: {
-    NewMessageForm,
-    MessageList
+    //NewMessageForm,
+    //MessageList
+    MonthSettingsForm
   },
   data() {
     return {

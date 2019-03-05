@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="text-center">
         <input 
             type="text"
             data-test="messageText"
