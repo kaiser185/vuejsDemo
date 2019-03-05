@@ -1,28 +1,48 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="text-center">
+    <div class="page-header text-center">
+        <h1>Budgetting app</h1>
+    </div>
+    <new-message-form @send="addMessage" />
+    <message-list :messages="messages" @removeItem="rmItem"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NewMessageForm from './components/NewMessageForm';
+import MessageList from './components/MessageList';
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    HelloWorld
+    NewMessageForm,
+    MessageList
+  },
+  data() {
+    return {
+      messages: []
+    };
+  },
+  methods: {
+    addMessage(text){
+      this.messages.unshift(text);
+    },
+    rmItem(text){
+      this.messages = this.messages.filter(e => {return e !== text});
+    }
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.page-header {
+  background-color: lightgrey;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 </style>
+
