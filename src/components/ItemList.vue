@@ -1,9 +1,9 @@
 <template>
-  <div class="text-center items-container">
+  <div class="row align-items-center justify-content-center mt-2">
     <ul>
       <li v-for="item in items" :key="item.id">
-        {{ item }}
-        <button data-test="RemoveItemButton" @click="removeItem(message)" class="btn">
+        {{ item.name }} -- € {{item.price}}
+        <button data-test="RemoveItemButton" @click="removeItem(item)" class="btn">
           Remove
         </button>
       </li>
@@ -16,8 +16,8 @@ export default {
   name: 'ItemList',
   props: ['items'],
   methods: {
-    removeItem (message) {
-      this.$emit('removeItem', message)
+    removeItem (item) {
+      this.$emit('removeItem', item)
     }
   }
 };
@@ -32,7 +32,7 @@ export default {
 }
 
 .btn {
-  background-color: DodgerBlue; /* Blue background */
+  background-color: red; /* Blue background */
   border: none; /* Remove borders */
   color: white; /* White text */
   /* padding: 12px 16px; /* Some padding */
@@ -41,7 +41,7 @@ export default {
 }
 
 .btn:hover {
-  background-color: RoyalBlue;
+  background-color: rebeccapurple;
 }
 
 li {

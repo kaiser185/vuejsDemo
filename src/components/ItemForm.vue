@@ -1,7 +1,35 @@
 <template>
-  <div class="row align-items-center justify-content-center">
+  <div class="row align-items-center justify-content-center" v-if="showComponent">
         <b-card bg-variant="light" :title="formTitle" :sub-title="formSubTitle" data-test="currentMonthCard">
-            
+            <b-form >
+                <b-form-group
+                    id="InputGroup1"
+                    label="Item Name:"
+                    label-for="ItemInput1"
+                    description="Please put the name of the item you bought here."
+                >
+                    <b-form-input
+                        id="ItemInput1"
+                        type="text"
+                        placeholder="Item Description" 
+                        v-model="itemName"
+                    />
+                </b-form-group>
+                <b-form-group
+                    id="InputGroup2"
+                    label="Item Name:"
+                    label-for="ItemInput2"
+                    description="Please put the name of the item you bought here."
+                >
+                    <b-form-input
+                        id="ItemInput2"
+                        type="number"
+                        placeholder="Price (in €)" 
+                        v-model="itemPrice"
+                    />
+                </b-form-group>
+                <b-button variant="outline-primary" data-test="registerItem" @click="registerItem">Register Item</b-button>
+            </b-form>
         </b-card>
   </div>
 </template>
@@ -19,19 +47,27 @@ export default {
             return this.month + ' ' + this.year;
         },
         formSubTitle () {
-            return 'You have a budget of ' + this.max + " €"
+            return this.max === 0 ? 
+                (this.year !== '' && this.month !== '' ? 'You have a budget of 0 €' : null) 
+                : 'You have a budget of ' + this.max + " €";
+        },
+        showComponent () {
+            return this.year !== '' && this.month !== '';
         }
     },
     data(){
         return {
           inputText: '',
+          itemName: '',
+          itemPrice: null
         };
     },
     methods: {
-        send (){
-            this.$emit('send', this.inputText);
-            this.inputText = '';
-        },
+        registerItem () {
+            this.$emit('registerItem', [ this.itemName, this.itemPrice ]);
+            this.itemName = ''
+            this.itemPrice = null;
+        }
     },
 };
 </script>

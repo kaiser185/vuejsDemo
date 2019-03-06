@@ -33,7 +33,8 @@
                     id="mb-2 mr-sm-2 mb-sm-0" 
                     placeholder="0.00" 
                     v-model="currentMax"
-
+                    type="number"
+                    
                     data-test="maxInput"
                 />
             </b-input-group>
