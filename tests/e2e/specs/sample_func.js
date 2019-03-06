@@ -53,6 +53,8 @@ describe('Interacting with the app', () => {
   it('Selects another month, inputs another item and checks persistence of both', ()=>{
     cy.get('[data-test="monthSelector"]').select('July');
     cy.should('not.contain', "Item2");
+    // Next month should not have the previous month's max
+    cy.get('[data-test="currentMonthCard"]').should('not.contain', "192.68");
 
     cy.get('[data-test="productName"]').type("Item3");
     cy.get('[data-test="productPrice"]').type("999.01");

@@ -43,6 +43,16 @@ export default {
       } else {
         return storeElem.monthItems
       }
+    },
+    currentMax () {
+      const storeElem = this.maxStore.find(element => {
+        return element.year === this.currentYear && element.month === this.currentMonth
+      })
+      if(storeElem === undefined || storeElem.max === undefined){
+        return 0
+      } else {
+        return storeElem.max
+      }
     }
   },
   data() {
@@ -51,7 +61,8 @@ export default {
       currentYearIdx: '',
       currentMonth: '',
       currentMonthIdx: '',
-      currentMax: 0,
+
+      maxStore: [],
 
       itemStore: [],
 
@@ -84,7 +95,24 @@ export default {
       this.currentMonth = this.months[month]
     },
     setMax (max) {
-      this.currentMax = parseFloat(max);
+      //find if store for the month exists
+      max = parseFloat(max);
+      const storeElem = this.maxStore.find(element => {
+        return element.year === this.currentYear && element.month === this.currentMonth
+      })
+      //store depending on what was found - Hacked together but works
+      if(storeElem === undefined){
+        this.maxStore.push({ 
+          year: this.currentYear, 
+          month: this.currentMonth, 
+          max: max
+        })
+      } else {
+        this.itemStore.find(element => {
+          return element.year === this.currentYear && element.month === this.currentMonth
+        }).max = max
+      }
+
     },
     registerItem (item) {
       //find if store for the month exists
