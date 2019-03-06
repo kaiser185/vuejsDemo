@@ -1,6 +1,6 @@
 <template>
   <div class="row align-items-center justify-content-center mt-2">
-    <ul>
+    <ul data-test="itemsList">
       <li v-for="item in items" :key="item.id">
         {{ item.name }} -- € {{item.price}}
         <button data-test="RemoveItemButton" @click="removeItem(item)" class="btn">

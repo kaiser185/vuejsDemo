@@ -13,6 +13,8 @@
                         type="text"
                         placeholder="Item Description" 
                         v-model="itemName"
+
+                        data-test="productName"
                     />
                 </b-form-group>
                 <b-form-group
@@ -26,9 +28,18 @@
                         type="number"
                         placeholder="Price (in €)" 
                         v-model="itemPrice"
+
+                        data-test="productPrice"
                     />
                 </b-form-group>
-                <b-button variant="outline-primary" data-test="registerItem" @click="registerItem">Register Item</b-button>
+                <b-button 
+                    variant="outline-primary" 
+                    @click="registerItem"
+
+                    data-test="registerProduct"
+                >
+                    Register Item
+                </b-button>
             </b-form>
         </b-card>
   </div>
