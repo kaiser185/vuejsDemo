@@ -8,7 +8,7 @@
                 :options="yearOptions" 
                 :value="yearSelected"
                 v-model="yearSelected"
-                v-on:change="changeYear"
+                @change="changeYear"
 
                 data-test="yearSelector"
             >
@@ -83,6 +83,7 @@ export default {
         changeYear () {
             if (!this.yearSelectedOnce && this.yearSelected !== null){
                 this.yearOptions.find(item => {return item.value === null}).disabled = true;
+                console.log("It happened")
             }
             this.$emit('changeYear', this.yearSelected)
         },
