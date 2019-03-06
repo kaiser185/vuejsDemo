@@ -17,4 +17,5 @@ before_script:
 #  - sudo dpkg -i google-chrome*.deb
 
 script:
+  - npm run test:unit
   - npm run test:e2e -- --headless
