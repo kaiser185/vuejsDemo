@@ -1,9 +1,9 @@
 <template>
-  <div class="text-center messages-container">
-    <ul>
-      <li v-for="message in messages" :key="message.id">
-        {{ message }}
-        <button data-test="RemoveItemButton" @click="removeItem(message)" class="btn">
+  <div class="row align-items-center justify-content-center mt-2">
+    <ul data-test="itemsList">
+      <li v-for="item in items" :key="item.id">
+        {{ item.name }} -- € {{item.price}}
+        <button data-test="RemoveItemButton" @click="removeItem(item)" class="btn">
           Remove
         </button>
       </li>
@@ -13,18 +13,18 @@
 
 <script>
 export default {
-  name: 'MessageList',
-  props: ['messages'],
+  name: 'ItemList',
+  props: ['items'],
   methods: {
-    removeItem (message) {
-      this.$emit('removeItem', message)
+    removeItem (item) {
+      this.$emit('removeItem', item)
     }
   }
 };
 </script>
 
 <style scoped>
-.messages-container {
+.items-container {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -32,7 +32,7 @@ export default {
 }
 
 .btn {
-  background-color: DodgerBlue; /* Blue background */
+  background-color: red; /* Blue background */
   border: none; /* Remove borders */
   color: white; /* White text */
   /* padding: 12px 16px; /* Some padding */
@@ -41,7 +41,7 @@ export default {
 }
 
 .btn:hover {
-  background-color: RoyalBlue;
+  background-color: rebeccapurple;
 }
 
 li {

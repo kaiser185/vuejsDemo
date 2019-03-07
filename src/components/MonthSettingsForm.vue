@@ -1,6 +1,6 @@
 <template>
-    <div class="row align-items-center justify-content-center">
-        <b-form inline>
+    <div class="row align-items-center justify-content-center mb-3">
+        <b-form inline @submit.prevent>
             <label class="sr-only" for="iFormYearSelect">Year</label>
             <b-form-select 
                 class="mb-2 mr-sm-2 mb-sm-0" 
@@ -8,7 +8,7 @@
                 :options="yearOptions" 
                 :value="yearSelected"
                 v-model="yearSelected"
-                v-on:change="changeYear"
+                @change="changeYear"
 
                 data-test="yearSelector"
             >
@@ -26,6 +26,20 @@
                 data-test="monthSelector"
             >
             </b-form-select>
+
+            <label class="mr-sm-2" for="iForm2Max">MaxBudget</label>
+            <b-input-group prepend="€" class="mb-2 mr-sm-2 mb-sm-0">
+                <b-input 
+                    id="mb-2 mr-sm-2 mb-sm-0" 
+                    placeholder="0.00" 
+                    v-model="currentMax"
+                    type="number"
+                    
+                    data-test="maxInput"
+                />
+            </b-input-group>
+
+            <b-button variant="outline-primary" data-test="maxSet" @click="setMax">Set Max</b-button>
         </b-form>
     </div>
 </template>
@@ -60,21 +74,26 @@ export default {
                 { value: '10', text: 'October'},
                 { value: '11', text: 'November'},
                 { value: '12', text: 'December'},
-            ]
+            ],
+
+            currentMax: null
         }
     },
     methods: {
-        changeYear (){
+        changeYear () {
             if (!this.yearSelectedOnce && this.yearSelected !== null){
                 this.yearOptions.find(item => {return item.value === null}).disabled = true;
             }
-            this.$emit('changeYear')
+            this.$emit('changeYear', this.yearSelected)
         },
-        changeMonth (){
+        changeMonth () {
             if (!this.monthSelectedOnce && this.monthSelected !== null){
                 this.monthOptions.find(item => {return item.value === null}).disabled = true;
             }
-            this.$emit('changeYear')
+            this.$emit('changeMonth', this.monthSelected)
+        },
+        setMax () {
+            this.$emit('setMax', this.currentMax);
         }
     }
 }
