@@ -1,6 +1,7 @@
 <template>
   <div class="row align-items-center justify-content-center" v-if="showComponent">
         <b-card bg-variant="light" :title="formTitle" :sub-title="formSubTitle" data-test="currentMonthCard">
+            <h3>You've spent {{ spent }} € </h3>
             <b-form >
                 <b-form-group
                     id="InputGroup1"
@@ -19,9 +20,9 @@
                 </b-form-group>
                 <b-form-group
                     id="InputGroup2"
-                    label="Item Name:"
+                    label="Item Price:"
                     label-for="ItemInput2"
-                    description="Please put the name of the item you bought here."
+                    description="Please put the price of the item you bought here."
                 >
                     <b-form-input
                         id="ItemInput2"
@@ -51,7 +52,8 @@ export default {
     props: [
         'year', 
         'month',
-        'max'
+        'max',
+        'spent'
     ],
     computed: {
         formTitle () {

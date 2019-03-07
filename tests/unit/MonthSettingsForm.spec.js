@@ -51,7 +51,10 @@ describe('MonthSettingsForm', () => {
 
   describe('Setting a Value for the month', () => {
     it('emits the value set after clicking Set', () => {
-
+      wrapper.find('[data-test="maxInput"]').setValue('192.68');
+      wrapper.find('[data-test="maxSet"]').trigger('click');
+      
+      expect(wrapper.emitted().setMax[0]).to.deep.equal(['192.68']);
     });
   });
 });

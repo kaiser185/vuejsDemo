@@ -8,7 +8,8 @@
       <item-form style="max-width: 30rem;" 
         :year="currentYear" 
         :month="currentMonth" 
-        :max="currentMax" 
+        :max="currentMax"
+        :spent="currentSpending" 
         @registerItem="registerItem"
         />
     </div>
@@ -30,6 +31,7 @@ export default {
     ItemForm,
     ItemList
   },
+  //Without a doubt this could be done better
   computed: {
     dateSet () {
       return this.currentYear !== '' && this.currentMonth !== '';
@@ -52,6 +54,20 @@ export default {
         return 0
       } else {
         return storeElem.max
+      }
+    },
+    currentSpending () {
+      const storeElem = this.itemStore.find(element => {
+        return element.year === this.currentYear && element.month === this.currentMonth
+      })
+      if(storeElem === undefined || storeElem.monthItems.length === 0){
+        return 0
+      } else {
+        var sum = 0;
+        storeElem.monthItems.forEach( (arrayElement) => {
+          sum += parseFloat(arrayElement.price)
+        })
+        return sum;
       }
     }
   },

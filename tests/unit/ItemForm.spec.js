@@ -8,7 +8,7 @@ import Vue from 'vue'
 
 Vue.use(BootstrapVue)
 
-describe('MonthSettingsForm', () => {
+describe('ItemForm', () => {
     let wrapper;
   
     before(() => {
