@@ -1,7 +1,7 @@
 <template>
   <div class="row align-items-center justify-content-center mt-2">
     <ul data-test="itemsList">
-      <li v-for="item in items" :key="item.id">
+      <li v-for="item in getCurrentItems" :key="item.id">
         {{ item.name }} -- € {{item.price}}
         <button data-test="RemoveItemButton" @click="removeItem(item)" class="btn">
           Remove
@@ -12,13 +12,15 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'ItemList',
-  props: ['items'],
+  computed: {
+    ...mapGetters('spending', ['getCurrentItems'])
+  },
   methods: {
-    removeItem (item) {
-      this.$emit('removeItem', item)
-    }
+    ...mapActions('spending', ['removeItem'])
   }
 };
 </script>

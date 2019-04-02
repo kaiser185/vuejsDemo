@@ -4,11 +4,13 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import UUID from 'vue-uuid'
+import store from './store'
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(UUID)
 
 new Vue({
-  render: h => h(App),
+  store,
+  render: h => h(App)
 }).$mount('#app')
