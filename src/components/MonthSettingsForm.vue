@@ -16,7 +16,6 @@
         class="mb-2 mr-sm-2 mb-sm-0"
         id="iFormMonthSelect"
         :options="monthOptions"
-        :value="monthSelected"
         v-model="monthSelected"
         @change="changeMonth"
         data-test="monthSelector"
@@ -87,7 +86,11 @@ export default {
       this.setMax(this.currentMax)
       this.currentMax = null
     },
-    ...mapActions("spending", ["setYear", "setMonth", "setMax"])
+    ...mapActions("spending", 
+      ["setYear", 
+      "setMonth", 
+      "setMax"]
+    )
   }
 };
 </script>

@@ -50,7 +50,7 @@ const getters = {
   getCurrentMonthEntry: (state) =>{
     const month = state.currentMonth
     const year = state.currentYear
-    var entry
+    let entry
     if (month !== null 
       && year !== null 
       && state.dataObject[year] !== undefined 
@@ -80,7 +80,7 @@ const getters = {
   getCurrentSpending: (state, getters) => {
     const items = getters.getCurrentItems
     if (items.length !== 0) {
-      var sum = 0;
+      let sum = 0;
       items.forEach(element => {
         sum += parseFloat(element.price)
       })

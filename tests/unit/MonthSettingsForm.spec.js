@@ -1,4 +1,7 @@
-import { mount } from '@vue/test-utils';
+import { mount, createLocalVue } from '@vue/test-utils';
+import Vuex from 'vuex';
+import BootstrapVue from 'bootstrap-vue';
+import flushPromises from 'flush-promises';
 import MonthSettingsForm from '../../src/components/MonthSettingsForm';
 const chai = require("chai");
 const expect = chai.expect;
@@ -7,79 +10,89 @@ const sinonChai = require("sinon-chai");
 
 chai.use(sinonChai)
 
+const localVue = createLocalVue()
+
+localVue.use(Vuex)
+localVue.use(BootstrapVue)
+
 describe('MonthSettingsForm', () => {
-  let wrapper;
+  //Only these two are of interest for consultation within the tests
+  let wrapper
+  const actions = {
+    setYear: sinon.stub(),
+    setMonth: sinon.stub(),
+    setMax: sinon.stub()
+  }
 
-  before(() => {
-    wrapper = mount(MonthSettingsForm);
-  });
+  const wrapperFactory = (isDateSet) => {
+    const getters = {
+      dateSet: sinon.stub().returns(isDateSet)
+    }
+    const spending = {
+      namespaced: true,
+      state: {},
+      actions,
+      getters
+    }
+    const store = new Vuex.Store({
+      modules: {
+        spending
+      }
+    })
+    //shallowMount cannot be used, as the interactives bootstrap-vue
+    //elements won't work without being instanced with the component.
+    return mount(MonthSettingsForm, {
+      localVue,
+      store: store,
+    })
+  }
 
-  //A 'describe' block shows the context of the test being run
-  describe('Setting the year selector', () => {
-    //Each particular unit test lives within an 'it' block
-    //It is within these blocks that mocha will look for exceptions to warn of failures.
-    //One or more assertions may be made within.
-    //Its callback must be marked 'async' for it handles code that is not necessarily concurrent with the test.
-    it('emits the year it was set', async () => {
-      var emitted;
-      //Here we create a spy on our function of interest within the component.
-      var spy = sinon.spy(wrapper.vm, 'changeYear')
-      //Here we interact with the DOM's element.
-      wrapper.find('[data-test="yearSelector"]').setValue('1');
-      //The callback within is asynchronous, and thus it is necessary to 'await' its execution
-      //This is done because the 'this.$emit(X)' function is called within a function that
-      //'handles' a DOM event, and thus, there is no certainty that it will complete whilst the test runs.
-      //wrapper.vm.$nextTick() forces the component to run through it 'cycle' and complete its operations
-      await wrapper.vm.$nextTick( () => {
-        emitted = wrapper.emitted('changeYear')[0]
-      });
-      //Here we utilise chai's expressive syntax to examine whether the component behaved as expected.
-      expect(spy).to.have.been.called;
-      expect(emitted).to.deep.equal(['1']);
-    });
-    //Here we examine that the components data has been correctly modified. This is not necessarily a common test.
-    it('disables the placeholder option', () => {
-      //Here we obtain the 'option' that is modeled in the 'select'
-      //Here is where it is advantageous to use bootstrap-vue, 
-      //as it can directly pull and model the component's data.
-      const option = wrapper.vm.yearOptions.find(item => {return item.value === null});
-      //Then we use chai's api to verify whether our expectations are true.
-      expect(option.disabled).to.deep.equal(true);
-    });
-  });
+  it('Calls setYear on the Store when setting the year', async () => {
+    wrapper = wrapperFactory(false)
+    let spy = sinon.spy(wrapper.vm, 'changeYear')
+    wrapper.find('[data-test="yearSelector"]').setValue('1');
+    //Given that calls to Vuex, and even the components methods
+    //are asynchronous, it is necessary to "flush" all promises
+    //in order to insure execution has been completed.
+    await flushPromises()
+    expect(spy).to.have.been.called
+    expect(actions.setYear).to.have.been.called
+  })
 
-  describe('Setting the month selector', () => {
-    
-    it('emits the month it was set', async () => {
-      
-      //Necessary because the event fired when the selector is interacted with 
-      //will not fire until the next 'tick'
-      var emitted;
+  it('Calls setMonth on the Store when setting the month', async () => {
+    wrapper = wrapperFactory(false)
+    const spy = sinon.spy(wrapper.vm, 'changeMonth')
+    wrapper.find('[data-test="monthSelector"]').setValue('1');
+    await flushPromises()
+    expect(spy).to.have.been.called
+    expect(actions.setMonth).to.have.been.called
+  })
 
-      var spy = sinon.spy(wrapper.vm, 'changeMonth')
+  it('Setting max without dateSet is does not change the state', async () => {
+    wrapper = wrapperFactory(false)
+    const spy = sinon.spy(wrapper.vm, 'changeMax')
+    wrapper.find('[data-test="maxInput"]').setValue('192.68');
+    wrapper.find('[data-test="maxSet"]').trigger('click');
+    await flushPromises()
+    expect(spy).to.not.have.been.called
+    expect(actions.setMax).to.not.have.been.called
+  })
 
-      wrapper.find('[data-test="monthSelector"]').setValue('1');
-      await wrapper.vm.$nextTick(() => {
-        emitted = wrapper.emitted().changeMonth[0]
-      });
+  it('Setting max with dateSet is does not change the state', async () => {
+    wrapper = wrapperFactory(true)
+    const spy = sinon.spy(wrapper.vm, 'changeMax')
+    wrapper.find('[data-test="maxInput"]').setValue('192.68');
+    wrapper.find('[data-test="maxSet"]').trigger('click');
+    await flushPromises()
+    expect(spy).to.have.been.called
+    expect(actions.setMax).to.have.been.called
+  })
 
-      expect(spy).to.have.been.called;
-      expect(emitted).to.deep.equal(['1']);
-
-    });
-
-    it('disables the placeholder option', () => {
-      const option = wrapper.vm.monthOptions.find(item => {return item.value === null});
-      expect(option.disabled).to.deep.equal(true);
-    });
-  });
-
-  describe('Setting a Value for the month', () => {
-    it('emits the value set after clicking Set', () => {
-      wrapper.find('[data-test="maxInput"]').setValue('192.68');
-      wrapper.find('[data-test="maxSet"]').trigger('click');
-      
-      expect(wrapper.emitted().setMax[0]).to.deep.equal(['192.68']);
-    });
-  });
+  it('Setting max with dateSet resets the currentMax', async () => {
+    wrapper = wrapperFactory(true)
+    wrapper.find('[data-test="maxInput"]').setValue('192.68');
+    wrapper.find('[data-test="maxSet"]').trigger('click');
+    await flushPromises()
+    expect(wrapper.vm.currentMax).to.deep.equal(null)
+  })
 });
