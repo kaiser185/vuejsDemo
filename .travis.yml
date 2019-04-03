@@ -10,6 +10,6 @@ install:
   - npm ci
 
 script:
-  #- npm run test:unit
+  - npm run test:unit
   #- npm run test:e2e -- --headless
   
