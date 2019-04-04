@@ -15,8 +15,15 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 localVue.use(BootstrapVue)
 
+//The describe block represents the test 'suite'
+//It represents a logical grouping of tests.
+//It can be nested as much as is desired.
+//Caution: Hooks from outer 'describes' will run within inner 'describes' too.
 describe('MonthSettingsForm', () => {
   //Only these two are of interest for consultation within the tests
+  //As such they are left within the scope of the suite.
+  //As they are redefined in every execution, they cannot pollute
+  //independent tests.
   let wrapper
   const actions = {
     setYear: sinon.stub(),
@@ -24,6 +31,9 @@ describe('MonthSettingsForm', () => {
     setMax: sinon.stub()
   }
 
+  //The wrapper factory pattern is suggested in the Vue.js documentation, 
+  //and allows easy control of wrapper properties while also avoiding the
+  //repetition of code. 
   const wrapperFactory = (isDateSet) => {
     const getters = {
       dateSet: sinon.stub().returns(isDateSet)
@@ -54,6 +64,7 @@ describe('MonthSettingsForm', () => {
     //Given that calls to Vuex, and even the components methods
     //are asynchronous, it is necessary to "flush" all promises
     //in order to insure execution has been completed.
+    //The async/await pattern allows execution to halt in order to 'wait' for asynchronous code to complete.
     await flushPromises()
     expect(spy).to.have.been.called
     expect(actions.setYear).to.have.been.called
