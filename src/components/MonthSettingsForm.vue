@@ -32,7 +32,12 @@
         />
       </b-input-group>
 
-      <b-button variant="outline-primary" data-test="maxSet" @click="changeMax" :disabled="!dateSet">Set Max</b-button>
+      <b-button 
+        variant="outline-primary" 
+        data-test="maxSet" 
+        @click="changeMax" 
+        :disabled="!dateSet"
+      >Set Max</b-button>
     </b-form>
   </div>
 </template>

@@ -1,8 +1,4 @@
-import {
-  mutations, 
-  getters,
-  actions
-} from '../../src/store/modules/spending';
+import { mutations, getters, actions } from '../../src/store/modules/spending';
 const chai = require("chai");
 const expect = chai.expect;
 const sinon = require("sinon");

@@ -45,7 +45,7 @@ describe('ItemList', () => {
     })
   }
 
-  it('Deletes an item and checks that the event is emitted', async () => {
+  it('Deletes an item and checks that the action is dispatched', async () => {
     wrapper = wrapperFactory([
       {
         "name": "Item1",

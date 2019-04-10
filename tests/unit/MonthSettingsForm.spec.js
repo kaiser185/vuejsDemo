@@ -56,15 +56,21 @@ describe('MonthSettingsForm', () => {
       store: store,
     })
   }
-
+  
+  //An it block can be considered as the unit test itself
+  //Within this particular test, we are testing both that
+  //a function that is local to the component is called and
+  //that a function that is within the store is called; thus,
+  //the use of two assertions is justified.
   it('Calls setYear on the Store when setting the year', async () => {
     wrapper = wrapperFactory(false)
     let spy = sinon.spy(wrapper.vm, 'changeYear')
     wrapper.find('[data-test="yearSelector"]').setValue('1');
-    //Given that calls to Vuex, and even the components methods
+    //Given that calls to Vuex, and even to the components' methods
     //are asynchronous, it is necessary to "flush" all promises
     //in order to insure execution has been completed.
-    //The async/await pattern allows execution to halt in order to 'wait' for asynchronous code to complete.
+    //The async/await pattern allows execution to halt in order 
+    //to 'wait' for asynchronous code to complete.
     await flushPromises()
     expect(spy).to.have.been.called
     expect(actions.setYear).to.have.been.called
